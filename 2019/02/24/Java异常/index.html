@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,异常处理,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java异常 [TOC] 1. 什么是异常 在Java中，异常是一种对象，表示阻止正常运行的程序执行的错误或者情况。  更通俗来说就是经常让我们程序崩溃的东西，比如刚刚我的代码就挂了    异常都有有哪些类型，都一定会弄死我的小可爱么 我该怎么抢救一下 小可爱   2. 异常的分类 Throwable类是所有异常类的父类，所有的异常都是它的后代。（Throwable：我 ，是你爸爸，或者爷爷）">
+<meta name="keywords" content="Java,异常处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java异常">
+<meta property="og:url" content="http://www.guiguiyo.cn/2019/02/24/Java异常/index.html">
+<meta property="og:site_name" content="bear 2">
+<meta property="og:description" content="Java异常 [TOC] 1. 什么是异常 在Java中，异常是一种对象，表示阻止正常运行的程序执行的错误或者情况。  更通俗来说就是经常让我们程序崩溃的东西，比如刚刚我的代码就挂了    异常都有有哪些类型，都一定会弄死我的小可爱么 我该怎么抢救一下 小可爱   2. 异常的分类 Throwable类是所有异常类的父类，所有的异常都是它的后代。（Throwable：我 ，是你爸爸，或者爷爷）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="c:/Users/bear2/AppData/Roaming/Typora/typora-user-images/1542208951566.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Java异常/throwable.jpg">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Java异常/shushu.png">
+<meta property="og:updated_time" content="2019-02-24T13:20:55.163Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java异常">
+<meta name="twitter:description" content="Java异常 [TOC] 1. 什么是异常 在Java中，异常是一种对象，表示阻止正常运行的程序执行的错误或者情况。  更通俗来说就是经常让我们程序崩溃的东西，比如刚刚我的代码就挂了    异常都有有哪些类型，都一定会弄死我的小可爱么 我该怎么抢救一下 小可爱   2. 异常的分类 Throwable类是所有异常类的父类，所有的异常都是它的后代。（Throwable：我 ，是你爸爸，或者爷爷）">
+<meta name="twitter:image" content="c:/Users/bear2/AppData/Roaming/Typora/typora-user-images/1542208951566.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.guiguiyo.cn/2019/02/24/Java异常/">
+
+
+
+
+
+  <title>Java异常 | bear 2</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bear 2</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">窝滴龟龟呀</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/02/24/Java异常/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bear 2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bear 2">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java异常</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-24T21:06:46+08:00">
+                2019-02-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-24T21:20:55+08:00">
+                2019-02-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java异常"><a href="#Java异常" class="headerlink" title="Java异常"></a>Java异常</h1><hr>
+<p>[TOC]</p>
+<h3 id="1-什么是异常"><a href="#1-什么是异常" class="headerlink" title="1. 什么是异常"></a>1. 什么是异常</h3><blockquote>
+<p>在Java中，异常是一种对象，表示阻止正常运行的程序执行的错误或者情况。</p>
+</blockquote>
+<pre><code>更通俗来说就是经常让我们程序崩溃的东西，比如刚刚我的代码就挂了 
+</code></pre><p><img src="C:\Users\bear2\AppData\Roaming\Typora\typora-user-images\1542208951566.png" alt="1542208951566"></p>
+<ul>
+<li>异常都有有哪些类型，都一定会弄死我的小可爱么</li>
+<li>我该怎么抢救一下 小可爱</li>
+</ul>
+<hr>
+<h3 id="2-异常的分类"><a href="#2-异常的分类" class="headerlink" title="2. 异常的分类"></a>2. 异常的分类</h3><ol>
+<li><p>Throwable类是所有异常类的父类，所有的异常都是它的后代。<del>（Throwable：我 ，是你爸爸，或者爷爷）</del></p>
+</li>
+<li><p>Error类：system error，描述的是系统内部错误，比如虚拟机炸了啊（VirtualMachineError）什么的。</p>
+<p><em>死亡率：百分之百</em>   </p>
+</li>
+<li><p>Exception类：由程序和外部环境引起的错误，可以被<strong>程序捕获和处理</strong>。也就是说，这种异常！可以抢救一下！<br>小可爱：我觉得我还可以抢救一下  </p>
+</li>
+</ol>
+<pre><code>（*族谱* ）
+</code></pre><p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Java异常\throwable.jpg" alt="throwable"></p>
+<hr>
+<h3 id="3-论叔侄之间的亲密关系"><a href="#3-论叔侄之间的亲密关系" class="headerlink" title="3. 论叔侄之间的亲密关系"></a>3. 论叔侄之间的亲密关系</h3><pre><code>上回说到，**Error** 和**Exception** 是一对亲兄弟，都有着好几个儿子。其中**Exception** 的儿子**RuntimeException**
+</code></pre><p>就格外喜欢他的叔叔Error，天天想着溜到他们家，就是这个样子</p>
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Java异常\shushu.png" alt="shushu"></p>
+<pre><code>上天也被他们之间的 ~~爱情~~  感动到了，于是为了让他们~~近亲结婚~~ ，免去了婚检，从此**Error** 和**RuntimeRxception ** 被划分为**免检异常** ，其他异常为**必检异常** 。 这种关系是不正常的，所以**免检异常是在程序中必须纠正的逻辑错误** 。
+</code></pre><p>PS：前面我发的那个截图就属于免检异常。</p>
+<blockquote>
+<ul>
+<li><p>免检异常：Java语言不强制要求编写代码捕获或声明免检异常。可能在程序的任何一个地方出现。</p>
+</li>
+<li><p>必检异常：编译器强行要求程序员检查并通过try-catch语句处理，或者在方法头进行声明。</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="4-异常处理"><a href="#4-异常处理" class="headerlink" title="4. 异常处理"></a>4. 异常处理</h3><pre><code>假如我们在工作中遇到问题该怎么处理？一般来说有两种情况，第一种就是自己觉得能解决就自己处理了，当自己解决不了，那就上报给上级找个大腿来解决。对Java来说同样是如此。
+</code></pre><ol>
+<li><p>声明异常</p>
+<p> 当一个方法可能会抛出<strong>必检异常</strong>，则必须在方法中头中声明。<strong>throws</strong>后面可跟多个异常。如下所示：</p>
+<pre><code>`public void method() throws IOException `    
+
+*何时需要声明异常？*
+
+***当方法中需要抛出异常或者说该方法调用的子方法有抛出异常，但是没有对该异常进行捕获处理***
+</code></pre><ol start="2">
+<li><p>抛出异常</p>
+<p> a. 检测到错误的程序可以创建一个合适的异常类型示例并抛出它。示例：</p>
+<pre><code>`IOException ex = new IOException();`
+`throw ex;`  
+
+或者是：
+
+`throw new IOException();`  
+
+**注意声明异常和抛出异常关键字的区别 **  
+</code></pre><p> b. 抛出链式异常，同原始异常一起抛出一个新异常（带有附加信息），称为链式异常。 </p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    p1();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception ex)&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> Exception(ex);	<span class="comment">//在捕获到异常后，带着这个异常抛出一个新异常</span></span><br><span class="line">    						  <span class="comment">//若输出异常信息，会先显示该方法抛出的异常，再显示p1产生的异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​            </p>
+<pre><code>3. 捕获异常
+
+    在使用中，将可能产生异常的语句放到try里面，若产生异常则会跳过剩下的语句，执行相应的catch部分的语句。
+
+**注意：**捕获多个异常时，若父类的catch块在子类之前，则会导致编译错误。如下面，若ex1是ex2的父类则会出错。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    statements;	<span class="comment">//可能产生异常的语句放入try里面</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception1 ex1)&#123;</span><br><span class="line">    handle <span class="keyword">for</span> ex1;	<span class="comment">//对第一个异常进行处理</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception2 ex2)&#123;</span><br><span class="line">    handle <span class="keyword">for</span> ex2;	<span class="comment">//对第二个异常进行处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>“上级”（调用者）对必检异常的处理：</p>
+<p> 若方法中声明了一个必检异常，则调用者必须在<strong>try-catch</strong>语句中执行，或者在调用者方法头中声明异常（即再把异常交给它的上级）。例如：若p2()可能会抛出一个必检异常（以IOException为例），方法p1()调用p2，则应该如下处理：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//捕获p2 的异常</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">p1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        p2();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(IOException ex)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抛出p2的异常</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">p1</span><span class="params">()</span> <span class="keyword">throws</span> <span class="title">IOException</span><span class="params">()</span></span>&#123;</span><br><span class="line">    p2();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h3 id="5-finally语句"><a href="#5-finally语句" class="headerlink" title="5. finally语句"></a>5. finally语句</h3><pre><code>若希望无论是否出现异常，都执行某些代码，则使用finally。（例如各种连接的关闭）
+</code></pre><blockquote>
+<ol>
+<li><p>使用finally时可以省略catch块</p>
+</li>
+<li><p>即使在到达finally前有return语句，依旧会执行finally的代码</p>
+</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="6-一些注意事项"><a href="#6-一些注意事项" class="headerlink" title="6. 一些注意事项"></a>6. 一些注意事项</h3><pre><code>1. 捕获异常时，尽量不要捕获通用异常，如`catch(Exception e)`,应该捕获特定异常。否则可能会捕获到意想不到的异常，而且也会令他人不易理解自己的代码。
+2. 对于捕获到的异常不要忽略
+3. 记住“Throw early catch late”(早点抛出异常延迟抓取异常)原则，这个原则就是说，应该在异常出现时就将其抛出，抓取应该在能够获取足够信息的时候。简单来说，底层的方法应该更多的抛出异常，异常应该更多的在顶层代码中抓取处理。
+4. 异常处理会花费较大的时间和资源，*不要用异常处理来做简单的逻辑测试*。如非必要，勿用异常
+</code></pre><hr>
+<h3 id="7-复习题"><a href="#7-复习题" class="headerlink" title="7. 复习题"></a>7. 复习题</h3><pre><code>1. throw、throws区别
+2. 必检异常和免检异常区别
+3. NoClassDefFoundError 和 ClassNoFoundException区别
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bear 2
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.guiguiyo.cn/2019/02/24/Java异常/" title="Java异常">http://www.guiguiyo.cn/2019/02/24/Java异常/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/异常处理/" rel="tag"># 异常处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/24/tags-categories/" rel="next" title="tags&&categories">
+                <i class="fa fa-chevron-left"></i> tags&&categories
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Bear 2</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java异常"><span class="nav-number">1.</span> <span class="nav-text">Java异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是异常"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 什么是异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-异常的分类"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 异常的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-论叔侄之间的亲密关系"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 论叔侄之间的亲密关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-异常处理"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. 异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-finally语句"><span class="nav-number">1.0.5.</span> <span class="nav-text">5. finally语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-一些注意事项"><span class="nav-number">1.0.6.</span> <span class="nav-text">6. 一些注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-复习题"><span class="nav-number">1.0.7.</span> <span class="nav-text">7. 复习题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天亮后便会很美的</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
