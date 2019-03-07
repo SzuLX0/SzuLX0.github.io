@@ -83,50 +83,6 @@
     
     
     <entry>
-      <title>tags&amp;&amp;categories</title>
-      <link href="/2019/02/24/tags-categories/"/>
-      <url>/2019/02/24/tags-categories/</url>
-      
-        <content type="html"><![CDATA[<p>hhhhhh</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> categories_test </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> test </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>my first acticle</title>
-      <link href="/2019/02/24/my-first-acticle/"/>
-      <url>/2019/02/24/my-first-acticle/</url>
-      
-        <content type="html"><![CDATA[<h3 id="第一"><a href="#第一" class="headerlink" title="第一"></a>第一</h3><p>哈哈哈哈哈哈哈哈哈</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 测试 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Hello World</title>
       <link href="/2019/02/24/hello-world/"/>
       <url>/2019/02/24/hello-world/</url>
