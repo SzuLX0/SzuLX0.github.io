@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Go,">
+  <meta name="keywords" content="日常,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方">
-<meta name="keywords" content="Go">
+<meta name="description" content="反思总结一下最近的所作所为，小声瞎bb一下...">
+<meta name="keywords" content="日常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go基础语法总结">
-<meta property="og:url" content="http://www.guiguiyo.cn/2019/03/01/Go基础语法总结/index.html">
+<meta property="og:title" content="一条咸鱼的日常">
+<meta property="og:url" content="http://www.guiguiyo.cn/2019/03/10/一条咸鱼的日常/index.html">
 <meta property="og:site_name" content="bear 2">
-<meta property="og:description" content="正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方">
+<meta property="og:description" content="反思总结一下最近的所作所为，小声瞎bb一下...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-01T16:45:50.084Z">
+<meta property="og:updated_time" content="2019-03-10T13:29:57.634Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go基础语法总结">
-<meta name="twitter:description" content="正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方">
+<meta name="twitter:title" content="一条咸鱼的日常">
+<meta name="twitter:description" content="反思总结一下最近的所作所为，小声瞎bb一下...">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://www.guiguiyo.cn/2019/03/01/Go基础语法总结/">
+  <link rel="canonical" href="http://www.guiguiyo.cn/2019/03/10/一条咸鱼的日常/">
 
 
 
 
 
-  <title>Go基础语法总结 | bear 2</title>
+  <title>一条咸鱼的日常 | bear 2</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/03/01/Go基础语法总结/">
+    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/03/10/一条咸鱼的日常/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Bear 2">
@@ -290,7 +290,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Go基础语法总结</h2>
+          <h2 class="post-title" itemprop="name headline">一条咸鱼的日常</h2>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-01T23:22:46+08:00">
-                2019-03-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-10T20:44:23+08:00">
+                2019-03-10
               </time>
             
 
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-02T00:45:50+08:00">
-                2019-03-02
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-10T21:29:57+08:00">
+                2019-03-10
               </time>
             
           </span>
@@ -337,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
                   </a>
                 </span>
 
@@ -368,7 +368,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  760
+                  745
                 </span>
               
 
@@ -392,7 +392,7 @@
 
           
               <div class="post-description">
-                  正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方
+                  反思总结一下最近的所作所为，小声瞎bb一下...
               </div>
           
 
@@ -409,106 +409,11 @@
       
 
       
-        <h1 id="Go语言基础语法总结"><a href="#Go语言基础语法总结" class="headerlink" title="Go语言基础语法总结"></a>Go语言基础语法总结</h1><h4 id="一-变量"><a href="#一-变量" class="headerlink" title="一   变量"></a>一   变量</h4><ol>
-<li><p>变量定义</p>
-<ul>
-<li><p>1.1 使用var关键字</p>
-<ul>
-<li>var a bool</li>
-<li>var a bool = true       </li>
-</ul>
-</li>
-<li><p>1.2  不指定类型直接初始化让编译器选择 <code>var a = &quot;abc&quot;</code></p>
-</li>
-<li><p>1.3 使用 “  :=  “定义变量，可省略var关键字，如 a:=”abc”</p>
-</li>
-</ul>
-<ol start="2">
-<li>notes:</li>
-</ol>
-<ul>
-<li>变量赋值只能在函数内使用，故第三种方式只能在函数内使用</li>
-<li>可使用var()同时定义多个变量</li>
-<li>Go的类型在变量名之后</li>
-</ul>
-</li>
-</ol>
-<h4 id="二-内置基本类型"><a href="#二-内置基本类型" class="headerlink" title="二  内置基本类型"></a>二  内置基本类型</h4><ol>
-<li>基本类型：<ul>
-<li>bool</li>
-<li>数字类型：int, uint, uintptr, float32, float64, complex64, complex128, <strong>rune</strong>（相当于char）</li>
-</ul>
-</li>
-<li>类型转换：Go不会自动转换类型，当类型不同时需要手动进行强制类型转换</li>
-</ol>
-<h4 id="三-常量"><a href="#三-常量" class="headerlink" title="三  常量"></a>三  常量</h4><ol>
-<li>定义：<strong>const</strong> ，常量名无需大写，Go中大写表示<strong>public</strong> ，例：const a = “acb”</li>
-<li>const + 数值，例如<em>const a = 0</em> ，a可以与int、float类型的数据直接运算而无需强制类型转换</li>
-<li>枚举类型：（目前使用的不多，之后再补充）<ul>
-<li>普通枚举类型</li>
-<li>自增值枚举类型</li>
-</ul>
-</li>
-</ol>
-<h4 id="四-条件语句"><a href="#四-条件语句" class="headerlink" title="四  条件语句"></a>四  条件语句</h4><ol>
-<li>switch<ul>
-<li>不需要break</li>
-<li>使用<strong>fallthrough</strong>关键字会无条件执行下一条语句</li>
-<li>switch后可以没有语句或跟多个语句</li>
-</ul>
-</li>
-<li>if<ul>
-<li>条件语句不需要括号</li>
-<li>可以在条件语句中定义变量并赋值，不同语句间用；隔开</li>
-<li>在条件语句中定义的变量作用域只在if语句中</li>
-</ul>
-</li>
-</ol>
-<h4 id="五-循环语句"><a href="#五-循环语句" class="headerlink" title="五  循环语句"></a>五  循环语句</h4><ol>
-<li><p>for</p>
-<ul>
-<li>不加条件 -&gt; 死循环</li>
-<li>不加初始条件 -&gt; 相当于while循环  （故Go中没有while循环）</li>
-</ul>
-</li>
-<li><p>for经常配合<strong>range</strong>使用</p>
-</li>
-</ol>
-<h4 id="六-函数"><a href="#六-函数" class="headerlink" title="六 函数"></a>六 函数</h4><ol>
-<li>定义： func  func_name(parm )  return_type{}</li>
-<li>Go中函数可返回多个值，并可以对多个值进行命名。实际应用中一般返回一个值和一个提示信息（fmt.Error())</li>
-<li>默认为值传递</li>
-<li>可变参数列表：在类型前使用” …“ 表示可变参数列表，如（…int)</li>
-<li>高级应用：<ul>
-<li>函数作为值：函数定义后作为值使用</li>
-<li>闭包：匿名函数，在动态编程中使用</li>
-</ul>
-</li>
-</ol>
-<h4 id="七-指针"><a href="#七-指针" class="headerlink" title="七 指针"></a>七 指针</h4><ol>
-<li>Go中的指针较C的指针更为简单，指针不能进行运算</li>
-</ol>
-<h4 id="八-内置容器"><a href="#八-内置容器" class="headerlink" title="八  内置容器"></a>八  内置容器</h4><ol>
-<li>数组<ul>
-<li>数组是值类型，传参会拷贝数组</li>
-<li>若需要改变数组的值，则参数需为数组的指针</li>
-</ul>
-</li>
-<li>切片（<em>slice</em>）<ul>
-<li>slice是数组的抽象，指向原数组的地址，改变slice中的值会改变数组的值，函数传参使用slice可以避免使用数组指针</li>
-<li>len与capacity: len是数组的长度；capacity是数组的容量</li>
-<li>索引不可以超过len;</li>
-<li>每次cap改变的时候指向array内存的指针都在变化。当在使用 <em>append</em> 的时候，如果 <em>cap==len</em> 了这个时候就会<a href="https://www.baidu.com/s?wd=%E6%96%B0%E5%BC%80&amp;tn=24004469_oem_dg&amp;rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">新开</a>辟一块更大内存，然后把之前的数据复制过去。</li>
-</ul>
-</li>
-<li>Map<ul>
-<li>接收时可以接收第二个参数判断<strong>key</strong>是否存在</li>
-<li>除了<strong>slice, map, func</strong>外所有自建类型都可以作为key</li>
-<li><strong>struct</strong>不包含上诉类型也可以作为key</li>
-</ul>
-</li>
-<li>字符串（待补充）</li>
-</ol>
+        <h3 id="一条咸鱼的日常"><a href="#一条咸鱼的日常" class="headerlink" title="一条咸鱼的日常"></a>一条咸鱼的日常</h3><h6 id="一"><a href="#一" class="headerlink" title="一"></a>一</h6><p>​    今天参加了篮球世界杯32强抽签仪式志愿者的培训，最大收获就是学会了一些急救知识。心肺复苏、除颤器的使用什么的，感觉人真是太脆弱了，一不小心就凉凉。下周末开始，希望能够借此机会好好锻炼一下自己的口语，想想上次去泰国自己的口语真的是一言难尽…..</p>
+<h6 id="二"><a href="#二" class="headerlink" title="二"></a>二</h6><p>​    新认识了一位朋友，相谈甚欢，可是没聊几天就要分别，甚至因为某些原因而联系方式都没有。离别真是世界上最常见的事情，而告别也真是最令人讨厌的事情。虽嘴上说着江湖再见，而大家心里都明白，更多的是相忘于江湖。即将毕业了，这种分别将越来越多。告别总是难免的，珍惜最后这段时间吧。</p>
+<h6 id="三"><a href="#三" class="headerlink" title="三"></a>三</h6><p>​    第一次自己煮面，和以前老妈在旁边在线指导做菜完全不一样的感受….以前每一步该干什么炒多久完全靠老妈指导，只要按部就班的做，虽不好看，但好歹味道不会差到哪去。而自己做，完全开始懵逼，甚至只是想煮一碗普通的青菜鸡蛋面。该放多少水？煮面要放油吗？青菜什么时候下？鸡蛋…噢我还没打过鸡蛋…，鸡蛋得怎么打才不会一堆蛋壳？<br>​    好吧，话不多说，虽然什么都不会，先下手再说。<em>于是，在一阵手忙脚乱之后，经过不懈的努力，果然把面煮糊了。</em>倒了这锅半焦的面陷入沉思，<strong>反思一下原因：面下多了；面下锅后洗菜时间太长导致没有及时搅拌面，导致最后糊锅里了。</strong>做的好的地方：好歹打鸡蛋成功了，没有想象中的困难。<strong>改进方案：加水减面；提前洗好菜；多搅拌面</strong>。改进结果：<br>面熟了，能吃，味道还过得去。<br>​    其实想想煮面跟自己打代码一样，看慕课什么的跟着老师好像什么都会，编程就是so easy。而慕课一关打开IDE，陷入我是谁我在哪我在干嘛的尴尬局面。果然还是得多练手才行……</p>
+<h6 id="四"><a href="#四" class="headerlink" title="四"></a>四</h6><p>​    最近开始春招，说实话有点焦虑，不会的太多，得抓紧时间准备一下了。可怜我的相机…等忙完这段时间就带你出门看世界…..</p>
+<h6 id="五"><a href="#五" class="headerlink" title="五"></a>五</h6><p>​    前两天和许久未见的朋友聚了一下，放纵了一下自己。果然，好的习惯要21天培养，而堕落只需要24小时…..<br>​    放纵完回来之前好不容易养成的习惯一下就断了，调整回状态又浪费了不少时间。还是尽量得控制住自己。<strong>多读书多拍照，多打代码别去闹~</strong></p>
 
       
     </div>
@@ -529,7 +434,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.guiguiyo.cn/2019/03/01/Go基础语法总结/" title="Go基础语法总结">http://www.guiguiyo.cn/2019/03/01/Go基础语法总结/</a>
+    <a href="http://www.guiguiyo.cn/2019/03/10/一条咸鱼的日常/" title="一条咸鱼的日常">http://www.guiguiyo.cn/2019/03/10/一条咸鱼的日常/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -544,7 +449,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Go/" rel="tag"># Go</a>
+            <a href="/tags/日常/" rel="tag"># 日常</a>
           
         </div>
       
@@ -557,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/24/Java异常/" rel="next" title="Java异常">
-                <i class="fa fa-chevron-left"></i> Java异常
+              <a href="/2019/03/05/Go中的面向对象/" rel="next" title="Go中的面向对象">
+                <i class="fa fa-chevron-left"></i> Go中的面向对象
               </a>
             
           </div>
@@ -566,10 +471,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/04/Slice详解/" rel="prev" title="Slice详解">
-                Slice详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -701,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Go语言基础语法总结"><span class="nav-number">1.</span> <span class="nav-text">Go语言基础语法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一-变量"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">一   变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二-内置基本类型"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">二  内置基本类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三-常量"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">三  常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四-条件语句"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">四  条件语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五-循环语句"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">五  循环语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六-函数"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">六 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#七-指针"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">七 指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#八-内置容器"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">八  内置容器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一条咸鱼的日常"><span class="nav-number">1.</span> <span class="nav-text">一条咸鱼的日常</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#一"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">一</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#二"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">二</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#三"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">三</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#四"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">四</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#五"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">五</span></a></li></ol></li></ol></div>
             
 
           </div>
