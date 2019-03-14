@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="bear 2">
 <meta property="og:description" content="正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-01T16:45:50.084Z">
+<meta property="og:updated_time" content="2019-03-14T08:55:46.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go基础语法总结">
 <meta name="twitter:description" content="正在学习Go语言中，总结了部分Go基础语法中与常见语言C、Java的区别，及一些需要注意的地方">
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-02T00:45:50+08:00">
-                2019-03-02
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-14T16:55:46+08:00">
+                2019-03-14
               </time>
             
           </span>
@@ -368,7 +368,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  760
+                  1.3k
                 </span>
               
 
@@ -384,7 +384,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  5
                 </span>
               
             </div>
@@ -489,26 +489,45 @@
 <li>Go中的指针较C的指针更为简单，指针不能进行运算</li>
 </ol>
 <h4 id="八-内置容器"><a href="#八-内置容器" class="headerlink" title="八  内置容器"></a>八  内置容器</h4><ol>
-<li>数组<ul>
+<li><p>数组</p>
+<ul>
 <li>数组是值类型，传参会拷贝数组</li>
 <li>若需要改变数组的值，则参数需为数组的指针</li>
 </ul>
 </li>
-<li>切片（<em>slice</em>）<ul>
+<li><p>切片（<em>slice</em>）</p>
+<ul>
 <li>slice是数组的抽象，指向原数组的地址，改变slice中的值会改变数组的值，函数传参使用slice可以避免使用数组指针</li>
 <li>len与capacity: len是数组的长度；capacity是数组的容量</li>
 <li>索引不可以超过len;</li>
 <li>每次cap改变的时候指向array内存的指针都在变化。当在使用 <em>append</em> 的时候，如果 <em>cap==len</em> 了这个时候就会<a href="https://www.baidu.com/s?wd=%E6%96%B0%E5%BC%80&amp;tn=24004469_oem_dg&amp;rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">新开</a>辟一块更大内存，然后把之前的数据复制过去。</li>
 </ul>
 </li>
-<li>Map<ul>
+<li><p>Map</p>
+<ul>
 <li>接收时可以接收第二个参数判断<strong>key</strong>是否存在</li>
 <li>除了<strong>slice, map, func</strong>外所有自建类型都可以作为key</li>
 <li><strong>struct</strong>不包含上诉类型也可以作为key</li>
 </ul>
 </li>
-<li>字符串（待补充）</li>
+<li><p>字符串</p>
+<p>​    a. <strong>len()函数返回的是字节数，Go中采用的是UTF-8编码，字节数与字符数不一定相等</strong></p>
+<p>​    b. 字符串可以通过索引读取，例如str[3]、str[2:]等，但是<strong>不能修改值或越界</strong></p>
+<p>​    c. 对于UTF8编码后文本的处理和原始的字节处理逻辑是一样的，例如判断前后缀可以直接用字节而无需解码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断前缀</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HasPrefix</span><span class="params">(s, prefix <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">len</span>(s)&gt;=<span class="built_in">len</span>(prefix)&amp;&amp;s[:<span class="built_in">len</span>(prefix)]==prefix</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是否为子串</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Contain</span><span class="params">(s, substr <span class="keyword">string</span>)</span> <span class="title">bool</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i&lt;<span class="built_in">len</span>(s); i++&#123;</span><br><span class="line">        <span class="keyword">if</span> HasPrefix(s[i:], substr)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>​    d. 不以字节，而以字符为单位处理字符串：</p>
+<p>​        1) 使用UTF8解码器</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); &#123;</span><br><span class="line">   <span class="comment">// 每一次调用DecodeRuneInString函数都返回一个r和长度，</span></span><br><span class="line">   <span class="comment">// r对应字符本身，长度对应r采用UTF8编码后的编码字节数目。</span></span><br><span class="line">	r, size := utf8.DecodeRuneInString(s[i:])</span><br><span class="line">	fmt.Printf(<span class="string">"%d\t%c\n"</span>, i, r)</span><br><span class="line">    <span class="comment">//当不为ASCII时步长不为1</span></span><br><span class="line">	i += size</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>   ​        2）使用<strong>range</strong>，Go中range会自动隐式解码</p>
+<p>   ​    e. 一些常用的包:</p>
+<blockquote>
+<p>​    标准库中有四个包对字符串处理尤为重要：bytes、strings、strconv和unicode包。strings包</p>
+<p>提供了许多如字符串的查询、替换、比较、截断、拆分和合并等功能。<br>    bytes包也提供了很多类似功能的函数，但是针对和字符串有着相同结构的[]byte类型。因为字<br>符串是只读的，因此逐步构建字符串会导致很多分配和复制。在这种情况下，使用<br>bytes.Buffer类型将会更有效。<br>    strconv包提供了布尔型、整型数、浮点数和对应字符串的相互转换，还提供了双引号转义相<br>关的转换。</p>
+<p>​    unicode包提供了IsDigit、IsLetter、IsUpper和IsLower等类似功能，它们用于给字符分类。每<br>个函数有一个单一的rune类型的参数，然后返回一个布尔值。而像ToUpper和ToLower之类的<br>转换函数将用于rune字符的大小写转换。所有的这些函数都是遵循Unicode标准定义的字母、<br>数字等分类规范。strings包也有类似的函数，它们是ToUpper和ToLower，将原始字符串的每<br>个字符都做相应的转换，然后返回新的字符串。</p>
+</blockquote>
 
       
     </div>
