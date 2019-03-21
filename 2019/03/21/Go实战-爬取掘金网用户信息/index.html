@@ -90,7 +90,6 @@
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/个人信息.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/个人信息HTML.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png">
-<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/获取全部标签.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/标签api.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/标签内容.png">
@@ -98,7 +97,7 @@
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/获取数据过程.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/爬虫架构.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/项目架构.png">
-<meta property="og:updated_time" content="2019-03-21T06:11:45.140Z">
+<meta property="og:updated_time" content="2019-03-21T06:40:01.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go实战--爬取掘金网用户信息">
 <meta name="twitter:description" content="断断续续写了好几天，最开始在掘金看到许多不错的文章，于是注册了个账号，但是不知道有哪些大佬值得关注，于是就想写个爬虫获取掘金里面用户信息，如关注数、获赞数、发布文章数，来找到“隐藏”在里面的大佬。">
@@ -330,7 +329,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-21T14:11:45+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-21T14:40:01+08:00">
                 2019-03-21
               </time>
             
@@ -446,7 +445,6 @@
 <li>从标签下文章列表进入</li>
 </ul>
 <p>(c)考虑到数据量及对数据处理上，选择在每个标签界面下进入用户个人信息界面；同时标签下有三种排序，因为目的是为了找到优质用户，所有选择“最热”</p>
-<img src="/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png" title="所有标签">
 <img src="/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png" title="所有标签">
 <p><strong>方案二</strong>：</p>
 <p>（a）在对网站进一步分析时发现，掘金没用采用分页，而是通过<strong>Ajax/Websocket</strong>等技术实现下滑界面自动加载内容。如下图，在查看Network信息时可以发现，<strong>每一次下滑页面浏览器会自动发送一个Get请求获取标签信息，根据Request Header 来判断请求是否合法</strong></p>
