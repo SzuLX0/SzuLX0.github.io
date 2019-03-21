@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="断断续续写了好几天，最开始在掘金看到许多不错的文章，于是注册了个账号，但是不知道有哪些大佬值得关注，于是就想写个爬虫获取掘金里面用户信息，如关注数、获赞数、发布文章数，来找到“隐藏”在里面的大佬。">
+<meta name="keywords" content="Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go实战--爬取掘金网用户信息">
+<meta property="og:url" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/index.html">
+<meta property="og:site_name" content="bear 2">
+<meta property="og:description" content="断断续续写了好几天，最开始在掘金看到许多不错的文章，于是注册了个账号，但是不知道有哪些大佬值得关注，于是就想写个爬虫获取掘金里面用户信息，如关注数、获赞数、发布文章数，来找到“隐藏”在里面的大佬。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/个人信息.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/个人信息.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/个人信息HTML.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/个人信息HTML.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/所有标签.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/标签界面.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/获取全部标签.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/获取全部标签.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/标签api.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/标签api.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/标签内容.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/标签内容.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/USER.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/USER.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/获取数据过程.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/获取数据过程.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/爬虫架构.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/爬虫架构.png">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/项目架构.png">
+<meta property="og:image" content="c:/Users/bear2/Desktop/bear2/source/_posts/Go实战-爬取掘金网用户信息/项目架构.png">
+<meta property="og:updated_time" content="2019-03-21T06:08:45.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go实战--爬取掘金网用户信息">
+<meta name="twitter:description" content="断断续续写了好几天，最开始在掘金看到许多不错的文章，于是注册了个账号，但是不知道有哪些大佬值得关注，于是就想写个爬虫获取掘金里面用户信息，如关注数、获赞数、发布文章数，来找到“隐藏”在里面的大佬。">
+<meta name="twitter:image" content="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/个人信息.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/">
+
+
+
+
+
+  <title>Go实战--爬取掘金网用户信息 | bear 2</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bear 2</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">窝滴龟龟呀</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bear 2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bear 2">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Go实战--爬取掘金网用户信息</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T12:23:59+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-03-21T14:08:45+08:00">
+                2019-03-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  887
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  断断续续写了好几天，最开始在掘金看到许多不错的文章，于是注册了个账号，但是不知道有哪些大佬值得关注，于是就想写个爬虫获取掘金里面用户信息，如关注数、获赞数、发布文章数，来找到“隐藏”在里面的大佬。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="Go爬取掘金网用户信息"><a href="#Go爬取掘金网用户信息" class="headerlink" title="Go爬取掘金网用户信息"></a>Go爬取掘金网用户信息</h4><p><em>此项目仅用于学习使用</em></p>
+<p><em>项目地址：<a href="https://github.com/SzuLX0/Go-Spider" target="_blank" rel="noopener">https://github.com/SzuLX0/Go-Spider</a></em></p>
+<h5 id="一-掘金网站分析"><a href="#一-掘金网站分析" class="headerlink" title="一 掘金网站分析"></a>一 掘金网站分析</h5><h6 id="1-数据来源"><a href="#1-数据来源" class="headerlink" title="1. 数据来源"></a>1. 数据来源</h6><p><strong>方案一</strong>：</p>
+<p>(a) 从个人信息页提取：遍历每一个用户信息页，从HTML中提取出用户的信息</p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/个人信息.png" title="个人信息">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\个人信息.png" alt="个人信息"></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/个人信息HTML.png" title="个人信息">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\个人信息HTML.png" alt="个人信息HTML"></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用正则表达式可以提取到网页的信息，如下：</span></span><br><span class="line"><span class="keyword">var</span> nameRe = regexp.MustCompile(<span class="string">`&lt;meta data-vue-meta="true" data-vmid="keywords" name="keywords" content="([^"]+)"/&gt;`</span>)</span><br><span class="line">match := nameRe.FindSubmatch(contents)</span><br></pre></td></tr></table></figure>
+<p>(b) 进入个人信息页的途径主要有以下几种：</p>
+<ul>
+<li>从首页文章列表进入</li>
+<li>从话题界面进入</li>
+<li>从标签下文章列表进入</li>
+</ul>
+<p>(c)考虑到数据量及对数据处理上，选择在每个标签界面下进入用户个人信息界面；同时标签下有三种排序，因为目的是为了找到优质用户，所有选择“最热”</p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png" title="所有标签">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\所有标签.png" alt="所有标签"></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/所有标签.png" title="所有标签">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\标签界面.png" alt="标签界面"></p>
+<p><strong>方案二</strong>：</p>
+<p>（a）在对网站进一步分析时发现，掘金没用采用分页，而是通过<strong>Ajax/Websocket</strong>等技术实现下滑界面自动加载内容。如下图，在查看Network信息时可以发现，<strong>每一次下滑页面浏览器会自动发送一个Get请求获取标签信息，根据Request Header 来判断请求是否合法</strong></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/获取全部标签.png" title="获取全部标签">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\获取全部标签.png" alt="获取全部标签"></p>
+<p>返回结果如下，是一个<strong>JSON</strong>类型的数据，因此我们只要<strong>伪造请求头，向这个URL发送GET请求就可以获取所有的tag相关的信息</strong></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/标签api.png" title="标签api">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\标签api.png" alt="标签api"></p>
+<p>同理我们再查看标签页面：<strong>它同样是向一个接口发送请求获取数据</strong>，我们查看这个返回的数据，跟预想的一样，有这个界面所需的所有信息。<strong>同时，我们在里面发现了一个”USER”，将其展开发现就是个人信息页所包含的信息。也就是说我们无需再去请求每个个人信息页的内容，直接可以通过这个api获取到个人信息</strong></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/标签内容.png" title="标签内容">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\标签内容.png" alt="标签内容"></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/USER.png" title="USER">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\USER.png" alt="USER"></p>
+<h5 id="二-爬虫架构设计"><a href="#二-爬虫架构设计" class="headerlink" title="二 爬虫架构设计"></a>二 爬虫架构设计</h5><p>​    经过分析，当然是选择方案二。无需再写一大堆正则表达式，且无需再去访问个人信息页，只需解析返回的JSON数据，提高效率。<strong>方案二的过程如下：</strong></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/获取数据过程.png" title="获取数据过程">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\获取数据过程.png" alt="获取数据过程"></p>
+<p>​    <strong>根据该过程，设计出整个爬虫的项目架构如下：</strong></p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/爬虫架构.png" title="爬虫架构">
+<p>​    <img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\爬虫架构.png" alt="爬虫架构"></p>
+<p>​    项目结构如下：</p>
+<img src="/2019/03/21/Go实战-爬取掘金网用户信息/项目架构.png" title="项目架构">
+<p><img src="C:\Users\bear2\Desktop\bear2\source\_posts\Go实战-爬取掘金网用户信息\项目架构.png" alt="项目架构"></p>
+<h5 id="三-爬虫效率分析及优化"><a href="#三-爬虫效率分析及优化" class="headerlink" title="三 爬虫效率分析及优化"></a>三 爬虫效率分析及优化</h5><ol>
+<li><p>由于没用采用并发，每次只能处理一个Request，网络利用率不高，之后可以通过采用并发，一次处理多个Request来改进</p>
+</li>
+<li><p>最初版本的爬虫效率不高，经过分析发现，在写入结果时，代码如下所示，对<strong>每一个用户</strong>进行一次WriteToFile操作，里面会进行一次<strong>文件的打开与保存操作</strong>，这样就导致过多的文件打开关闭操作，所以造成爬虫整体的效率太低。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> _, item:= <span class="keyword">range</span> parserResult.Items&#123;</span><br><span class="line">	<span class="keyword">if</span> i, ok := item.(model.User);ok&#123;</span><br><span class="line">		WriteToFile(i)</span><br><span class="line">          &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改进：<strong>将每一次Request处理后的结果一次性写入文件</strong>，效率明显提升。</p>
+</li>
+</ol>
+<h5 id="四-总结"><a href="#四-总结" class="headerlink" title="四 总结"></a>四 总结</h5><ol>
+<li>在这个项目开始的时候没有对网站进行仔细的分析，导致在方案一上花费了过多的时间才发现有接口可以直接去获取数据。</li>
+<li><strong>IO操作</strong>耗时较多，在进行写入文件操作时要尽量减少过多不必要的操作。</li>
+</ol>
+<p><em>更多项目实现上的遇到的一些问题记录在 另一篇文章：Go爬虫学习笔记</em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bear 2
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/" title="Go实战--爬取掘金网用户信息">http://www.guiguiyo.cn/2019/03/21/Go实战-爬取掘金网用户信息/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag"># Go</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/17/Go爬虫踩坑笔记/" rel="next" title="Go爬虫学习笔记">
+                <i class="fa fa-chevron-left"></i> Go爬虫学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Bear 2</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go爬取掘金网用户信息"><span class="nav-number">1.</span> <span class="nav-text">Go爬取掘金网用户信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一-掘金网站分析"><span class="nav-number">1.1.</span> <span class="nav-text">一 掘金网站分析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-数据来源"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 数据来源</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二-爬虫架构设计"><span class="nav-number">1.2.</span> <span class="nav-text">二 爬虫架构设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三-爬虫效率分析及优化"><span class="nav-number">1.3.</span> <span class="nav-text">三 爬虫效率分析及优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四-总结"><span class="nav-number">1.4.</span> <span class="nav-text">四 总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天亮后便会很美的</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
