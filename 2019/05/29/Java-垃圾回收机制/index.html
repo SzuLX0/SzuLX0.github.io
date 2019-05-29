@@ -87,14 +87,13 @@
 <meta property="og:site_name" content="bear 2">
 <meta property="og:description" content="面试被问到后偷偷学习了两天，写篇文章（假装）深入分析Java的垃圾回收机制，如有错误欢迎指正">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="e:/bear2/source/_posts/Java-垃圾回收机制/多线程垃圾回收出错的情况.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/JVM的堆划分.png">
 <meta property="og:image" content="e:/bear2/source/_posts/Java-垃圾回收机制/JVM的堆划分.png">
-<meta property="og:updated_time" content="2019-05-29T16:57:57.077Z">
+<meta property="og:updated_time" content="2019-05-29T17:02:25.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 垃圾回收机制">
 <meta name="twitter:description" content="面试被问到后偷偷学习了两天，写篇文章（假装）深入分析Java的垃圾回收机制，如有错误欢迎指正">
-<meta name="twitter:image" content="e:/bear2/source/_posts/Java-垃圾回收机制/多线程垃圾回收出错的情况.png">
+<meta name="twitter:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/JVM的堆划分.png">
 
 
 
@@ -322,7 +321,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-30T00:57:57+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-30T01:02:25+08:00">
                 2019-05-30
               </time>
             
@@ -436,30 +435,27 @@
 
    ​    **具体做法：** 将一系列**GC ROOTS**作为初始的存活对象集合，从该集合出发，找到所有该集合引用的对象加入该集合，最后未探索到的对象便是死亡的，可以回收。那么什么是GC ROOTS呢?**简单理解为堆外对堆内的引用**，比如局部变量，它可能会引用一个对象，从而使该对象可达。**常见的几种GC ROOTS有：**
 
-   &gt; **Java方法中的局部变量**
+   &gt; Java方法中的局部变量
    &gt;
-   &gt; **已加载类的静态变量**
+   &gt; 已加载类的静态变量
    &gt;
-   &gt; **JNI handles**（*Java 本机接口（Java Native Interface，*JNI*）是一个标准的Java API*）
+   &gt; JNI handles（*Java 本机接口（Java Native Interface，*JNI*）是一个标准的Java API*）
    &gt;
-   &gt; **已启动未停止的Java线程** 
+   &gt; 已启动未停止的Java线程 
 
 
 
    {% asset_img 可达性分析.png JVM  可达性分析%}
 
-   ![可达性分析](E:\bear2\source\_posts\Java-垃圾回收机制\可达性分析.png)
-
-   ​                                *（图片来自极客时间）*
+   ​                        （图片来自极客时间）
 </code></pre><ol start="2">
 <li><p><strong>在什么时候回收</strong></p>
 <p>​    在多线程环境下进行回收可能存在很多问题，比如若垃圾回收与其他线程同时进行，可能有线程会更新引用，比如<strong>将引用设置为NULL，或者将引用设置为未被访问的对象</strong>，对于第一种情况危害不大，只是会导致部分垃圾没有及时回收；而第二种有可能导致JVM崩溃，<strong>因为未被访问的对象被标记了要被清除，在标记完之后其他线程对它进行引用，若在引用的时候该对象被清除了则会导致引用了一个空对象，从而使JVM奔溃</strong>。如下图所示：</p>
-
-<p><img src="E:\bear2\source\_posts\Java-垃圾回收机制\多线程垃圾回收出错的情况.png" alt="多线程垃圾回收出错的情况"></p>
-<p>​    </p>
-<p>​    为了避免上述情况，Java中采用了一种<strong>Stop-the-world</strong>的方法，当进行垃圾回收时，JVM会等待其他线程进入<strong>安全点（safepoint）</strong>，安全点是一个稳定的执行状态，在这个状态下JVM的堆栈不会发生改变，因此JVM可以安全的进行垃圾回收。</p>
 </li>
 </ol>
+   
+<p>   ​    </p>
+<p>   ​    为了避免上述情况，Java中采用了一种<strong>Stop-the-world</strong>的方法，当进行垃圾回收时，JVM会等待其他线程进入<strong>安全点（safepoint）</strong>，安全点是一个稳定的执行状态，在这个状态下JVM的堆栈不会发生改变，因此JVM可以安全的进行垃圾回收。</p>
 <ol start="3">
 <li><p><strong>怎么回收</strong></p>
 <ol>
