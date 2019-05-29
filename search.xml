@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Java 垃圾回收机制</title>
+      <link href="/2019/05/29/Java-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/"/>
+      <url>/2019/05/29/Java-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
+      
+        <content type="html"><![CDATA[<h4 id="一-垃圾回收基础"><a href="#一-垃圾回收基础" class="headerlink" title="一 垃圾回收基础"></a>一 垃圾回收基础</h4><p>​    垃圾回收，顾名思义，便是将已经分配出去的，但却不再使用的内存回收回来，以便重新分配使用。<br>​    As we know， Java与C++相比对于开发人员来说一个很重要的特性就是不再需要自己手动管理内存，只需交给垃圾回收器让其自动回收即可。那么该怎么实现自动垃圾回收呢？需要解决以下问题：</p><blockquote><ol><li>怎么判断某一部分是垃圾</li><li>在什么时候回收</li><li>怎么回收这些垃圾</li></ol></blockquote><p>​    接下来将一一解决以下问题。</p><ol><li><p><strong>怎么判断某一部分是垃圾</strong></p><ol><li><p>1 <strong>引用计数法</strong></p><p>​    <strong>具体做法:</strong> 为每个对象分配一个计数器，用来统计该对象被引用的次数，每当有一个引用指向它，则计数器+1，反之-1；当该对象计数器为0，则回收该对象。</p><p>​    <strong>存在的问题：</strong> 无法<strong>处理循环引用对象</strong>。什么是循环引用对象？比如a、b两个对象互相引用，但是除了他们之外没有其他引用指向a、b，此时实际上他们已经死了，但计数器会认为他们还活着，因此会造成a、b所在的内存空间无法回收，导致内存泄漏。</p></li></ol></li></ol><pre><code>2. 2 **可达性分析算法（JVM中采用）**   ​    **具体做法：** 将一系列**GC ROOTS**作为初始的存活对象集合，从该集合出发，找到所有该集合引用的对象加入该集合，最后未探索到的对象便是死亡的，可以回收。那么什么是GC ROOTS呢?**简单理解为堆外对堆内的引用**，比如局部变量，它可能会引用一个对象，从而使该对象可达。**常见的几种GC ROOTS有：**   &gt; **Java方法中的局部变量**   &gt;   &gt; **已加载类的静态变量**   &gt;   &gt; **JNI handles**（*Java 本机接口（Java Native Interface，*JNI*）是一个标准的Java API*）   &gt;   &gt; **已启动未停止的Java线程**    {% asset_img 可达性分析.png JVM  可达性分析%}   ![可达性分析](E:\bear2\source\_posts\Java-垃圾回收机制\可达性分析.png)   ​                                *（图片来自极客时间）*</code></pre><ol start="2"><li><p><strong>在什么时候回收</strong></p><p>​    在多线程环境下进行回收可能存在很多问题，比如若垃圾回收与其他线程同时进行，可能有线程会更新引用，比如<strong>将引用设置为NULL，或者将引用设置为未被访问的对象</strong>，对于第一种情况危害不大，只是会导致部分垃圾没有及时回收；而第二种有可能导致JVM崩溃，<strong>因为未被访问的对象被标记了要被清除，在标记完之后其他线程对它进行引用，若在引用的时候该对象被清除了则会导致引用了一个空对象，从而使JVM奔溃</strong>。如下图所示：</p><p><img src="E:\bear2\source\_posts\Java-垃圾回收机制\多线程垃圾回收出错的情况.png" alt="多线程垃圾回收出错的情况"></p><p>​    </p><p>​    为了避免上述情况，Java中采用了一种<strong>Stop-the-world</strong>的方法，当进行垃圾回收时，JVM会等待其他线程进入<strong>安全点（safepoint）</strong>，安全点是一个稳定的执行状态，在这个状态下JVM的堆栈不会发生改变，因此JVM可以安全的进行垃圾回收。</p></li></ol><ol start="3"><li><p><strong>怎么回收</strong></p><ol><li>1 <strong>标记清除</strong>，将死亡对象所在空间设置为空闲，记录在一个空闲列表中以供使用。<strong>缺点：造成内存碎片；降低分配效率</strong></li><li>2 <strong>压缩</strong>：将存活的对象聚集在内存的起始位置，留下连续的内存空间。<strong>缺点：压缩算法带来的性能损耗</strong></li><li>3  <strong>复制：</strong> 将内存分为两等份，分别用<strong>from</strong>和<strong>to</strong>指针来维护，当发生垃圾回收时，将from内存活的对象复制到to中，然后交换from和to两个指针的内容。这样可以解决内存碎片化的问题。<strong>缺点：堆空间使用效率低下</strong></li></ol></li></ol><p>   <strong>Java中采用多种方式结合的回收方法</strong></p><h4 id="二-Java中的垃圾回收"><a href="#二-Java中的垃圾回收" class="headerlink" title="二 Java中的垃圾回收"></a>二 Java中的垃圾回收</h4><p>​    <strong>二八定律</strong>：在任何一组东西中，最重要的只占其中一小部分，约20%，其余80%尽管是多数，却是次要的，因此又称二八定律。二八定律在Java的对象中同样适用，<strong>大部分的对象只能存活一小段时间</strong>，<strong>JVM的分代回收就是基于这个定律，JVM将堆划分成新生代和老年代</strong></p><p><strong>JVM的堆划分如下图所示：（图片来自极客时间）</strong></p><img src="/2019/05/29/Java-垃圾回收机制/JVM的堆划分.png" title="JVM堆空间的划分"><p><img src="E:\bear2\source\_posts\Java-垃圾回收机制\JVM的堆划分.png" alt="JVM的堆划分"></p><p><strong>MINOR  GC</strong>：<strong>标记-复制算法</strong></p><p>​    当新生代<strong>Eden</strong>区满，JVM进行一次<strong>minor gc</strong>，具体操作如下：</p><pre><code>1. 将Survivors老存活对象晋升到老年代2. 将Eden和from中存活的对象复制到to中3. 将from和to互换4. JVM会记录Survivors中对象被复制的次数，当次数达到一定值会被晋升到老年代</code></pre><p><strong>FULL GC</strong>：触发条件：若当新生代要晋升时发现老年代空间不够</p><p><strong>卡表</strong>：存在目的主要是<strong>老年代可能引用新生代的对象</strong>，如果引用的话在标记存活对象时需要扫描全堆，，这样的话就导致了全堆扫描。卡表就是用来解决这个问题。（不想写了引用以下别人的..)</p><blockquote><p>卡表的具体策略是<strong>将老年代的空间分成大小为 512B的若干张卡，并且维护一个卡表，卡表本省是字节数组，数组中的每个元素对应着一张卡，其实就是一个标识位，这个标识位代表对应的卡是否可能存有指向新生代对象的引用</strong>，如果可能存在，那么我们认为这张卡是脏的，即<strong>脏卡</strong>。如上图所示，卡表3被标记为脏。</p><p>在进行Minor GC的时候，我们便可以不用扫描整个老年代，而是在卡表中寻找脏卡，并将脏卡中的老年代指向新生代的引用加入到 Minor GC的GC Roots里，当完成所有脏卡的扫描之后，Java 虚拟机便会将所有脏卡的标识位清零。这样虚拟机以空间换时间，避免了全表扫描</p><p>作者：pjmike_pj</p><p>链接：<a href="https://juejin.im/post/5b8d2a5551882542ba1ddcf8" target="_blank" rel="noopener">https://juejin.im/post/5b8d2a5551882542ba1ddcf8</a></p><p>来源：掘金</p><p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p></blockquote><p>​        </p><p>​    </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JVM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JVM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Go实战--爬取掘金网用户信息</title>
       <link href="/2019/03/21/Go%E5%AE%9E%E6%88%98-%E7%88%AC%E5%8F%96%E6%8E%98%E9%87%91%E7%BD%91%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF/"/>
       <url>/2019/03/21/Go%E5%AE%9E%E6%88%98-%E7%88%AC%E5%8F%96%E6%8E%98%E9%87%91%E7%BD%91%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF/</url>
