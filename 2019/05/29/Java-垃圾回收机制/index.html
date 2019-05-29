@@ -87,13 +87,14 @@
 <meta property="og:site_name" content="bear 2">
 <meta property="og:description" content="面试被问到后偷偷学习了两天，写篇文章（假装）深入分析Java的垃圾回收机制，如有错误欢迎指正">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/可达性分析.png">
 <meta property="og:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/JVM的堆划分.png">
 <meta property="og:image" content="e:/bear2/source/_posts/Java-垃圾回收机制/JVM的堆划分.png">
-<meta property="og:updated_time" content="2019-05-29T17:08:47.151Z">
+<meta property="og:updated_time" content="2019-05-29T17:15:17.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 垃圾回收机制">
 <meta name="twitter:description" content="面试被问到后偷偷学习了两天，写篇文章（假装）深入分析Java的垃圾回收机制，如有错误欢迎指正">
-<meta name="twitter:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/JVM的堆划分.png">
+<meta name="twitter:image" content="http://www.guiguiyo.cn/2019/05/29/Java-垃圾回收机制/可达性分析.png">
 
 
 
@@ -321,7 +322,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-30T01:08:47+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-30T01:15:17+08:00">
                 2019-05-30
               </time>
             
@@ -425,32 +426,24 @@
 <li><p><strong>怎么判断某一部分是垃圾</strong></p>
 <ol>
 <li><p>1 <strong>引用计数法</strong></p>
-<p>​    <strong>具体做法:</strong> 为每个对象分配一个计数器，用来统计该对象被引用的次数，每当有一个引用指向它，则计数器+1，反之-1；当该对象计数器为0，则回收该对象。</p>
-<p>​    <strong>存在的问题：</strong> 无法<strong>处理循环引用对象</strong>。什么是循环引用对象？比如a、b两个对象互相引用，但是除了他们之外没有其他引用指向a、b，此时实际上他们已经死了，但计数器会认为他们还活着，因此会造成a、b所在的内存空间无法回收，导致内存泄漏。</p>
+<pre><code>**具体做法:** 为每个对象分配一个计数器，用来统计该对象被引用的次数，每当有一个引用指向它，则计数器+1，反之-1；当该对象计数器为0，则回收该对象。
+
+ **存在的问题：** 无法**处理循环引用对象**。什么是循环引用对象？比如a、b两个对象互相引用，但是除了他们之外没有其他引用指向a、b，此时实际上他们已经死了，但计数器会认为他们还活着，因此会造成a、b所在的内存空间无法回收，导致内存泄漏。
+</code></pre></li>
+<li><p>2 <strong>可达性分析算法（JVM中采用）</strong><br><strong>具体做法：</strong> 将一系列<strong>GC ROOTS</strong>作为初始的存活对象集合，从该集合出发，找到所有该集合引用的对象加入该集合，最后未探索到的对象便是死亡的，可以回收。那么什么是GC ROOTS呢?<strong>简单理解为堆外对堆内的引用</strong>，比如局部变量，它可能会引用一个对象，从而使该对象可达。</p>
+<p>​    <img src="/2019/05/29/Java-垃圾回收机制/可达性分析.png" title="JVM可达性分析"><br>​        （图片来自极客时间）</p>
 </li>
 </ol>
 </li>
 </ol>
-<pre><code>2. 2**可达性分析算法（JVM中采用）**
-
-​    **具体做法：** 将一系列**GC ROOTS**作为初始的存活对象集合，从该集合出发，找到所有该集合引用的对象加入该集合，最后未探索到的对象便是死亡的，可以回收。那么什么是GC ROOTS呢?**简单理解为堆外对堆内的引用**，比如局部变量，它可能会引用一个对象，从而使该对象可达。****
-
-{% asset_img 可达性分析.png JVM可达性分析%}
-
-​                        （图片来自极客时间）
-
-
-
-​    常见的几种GC ROOTS有：
-
-&gt; Java方法中的局部变量
-&gt;
-&gt; 已加载类的静态变量
-&gt;
-&gt; JNI handles（*Java 本机接口（Java Native Interface，*JNI*）是一个标准的Java API*）
-&gt;
-&gt; 已启动未停止的Java线程 
-</code></pre><ol start="2">
+<pre><code>常见的几种GC ROOTS有：
+</code></pre><blockquote>
+<p>Java方法中的局部变量</p>
+<p>已加载类的静态变量</p>
+<p>JNI handles（<em>Java 本机接口（Java Native Interface，</em>JNI<em>）是一个标准的Java API</em>）</p>
+<p>已启动未停止的Java线程 </p>
+</blockquote>
+<ol start="2">
 <li><p><strong>在什么时候回收</strong></p>
 <p>​    在多线程环境下进行回收可能存在很多问题，比如若垃圾回收与其他线程同时进行，可能有线程会更新引用，比如<strong>将引用设置为NULL，或者将引用设置为未被访问的对象</strong>，对于第一种情况危害不大，只是会导致部分垃圾没有及时回收；而第二种有可能导致JVM崩溃，<strong>因为未被访问的对象被标记了要被清除，在标记完之后其他线程对它进行引用，若在引用的时候该对象被清除了则会导致引用了一个空对象，从而使JVM奔溃</strong>。如下图所示：</p>
 </li>
