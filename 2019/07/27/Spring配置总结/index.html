@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SpringIoC 概念IoC：Inversion of Control，控制反转、依赖注入（DI）  控制：控制对象的创建和销毁（生命周期） 反转：将对象的控制权交给IoC容器  创建IoC容器 bean factory创建：提供基本的DI支持，对于大部分应用而言太低级，一般不使用。 应用上下文(application context)：基于bean factory构建，提供应用框架级的服务，一">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring配置总结">
+<meta property="og:url" content="http://www.guiguiyo.cn/2019/07/27/Spring配置总结/index.html">
+<meta property="og:site_name" content="bear 2">
+<meta property="og:description" content="SpringIoC 概念IoC：Inversion of Control，控制反转、依赖注入（DI）  控制：控制对象的创建和销毁（生命周期） 反转：将对象的控制权交给IoC容器  创建IoC容器 bean factory创建：提供基本的DI支持，对于大部分应用而言太低级，一般不使用。 应用上下文(application context)：基于bean factory构建，提供应用框架级的服务，一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-27T08:31:54.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring配置总结">
+<meta name="twitter:description" content="SpringIoC 概念IoC：Inversion of Control，控制反转、依赖注入（DI）  控制：控制对象的创建和销毁（生命周期） 反转：将对象的控制权交给IoC容器  创建IoC容器 bean factory创建：提供基本的DI支持，对于大部分应用而言太低级，一般不使用。 应用上下文(application context)：基于bean factory构建，提供应用框架级的服务，一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.guiguiyo.cn/2019/07/27/Spring配置总结/">
+
+
+
+
+
+  <title>Spring配置总结 | bear 2</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bear 2</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">窝滴龟龟呀</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/07/27/Spring配置总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bear 2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bear 2">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Spring配置总结</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-27T16:28:22+08:00">
+                2019-07-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-27T16:31:54+08:00">
+                2019-07-27
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="IoC-概念"><a href="#IoC-概念" class="headerlink" title="IoC 概念"></a>IoC 概念</h2><p><strong>IoC：Inversion of Control，控制反转、依赖注入（DI）</strong></p>
+<ul>
+<li>控制：控制对象的创建和销毁（生命周期）</li>
+<li>反转：将对象的控制权交给IoC容器</li>
+</ul>
+<h2 id="创建IoC容器"><a href="#创建IoC容器" class="headerlink" title="创建IoC容器"></a>创建IoC容器</h2><ol>
+<li>bean factory创建：提供基本的DI支持，对于大部分应用而言太低级，一般不使用。</li>
+<li>应用上下文(application context)：基于bean factory构建，提供应用框架级的服务，一般使用这个。有多种实现：<ul>
+<li>AnnotationConfigApplicationContext：从一个或多个基于Java配置类中加载</li>
+<li>ClassPathXmlApplicationContext：从类路径下的xml配置文件中加载上下文定义</li>
+<li>FileSystemXmlApplicationContext：从文件系统中的xml配置文件加载上下文定义</li>
+<li>XmlWebApplicationContext ：由 Web 应用的XML文件读取上下文。例如我们在 Spring MVC 使用的情况。</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>BeanFactory</th>
+<th>ApplicationContext</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>它使用懒加载</td>
+<td>它使用即时加载</td>
+</tr>
+<tr>
+<td>它使用语法显式提供资源对象</td>
+<td>它自己创建和管理资源对象</td>
+</tr>
+<tr>
+<td>不支持国际化</td>
+<td>支持国际化</td>
+</tr>
+<tr>
+<td>不支持基于依赖的注解</td>
+<td>支持基于依赖的注解</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Bean"><a href="#Bean" class="headerlink" title="Bean"></a>Bean</h2><p><strong>bean定义</strong></p>
+<blockquote>
+<p>一个Java类，实现以下规范：<br>1、所有属性为private<br>2、提供默认构造方法<br>3、提供getter和setter<br>4、实现serializable接口</p>
+</blockquote>
+<hr>
+<p><strong>Spirng配置方式</strong></p>
+<ol>
+<li><p>通过XMl配置文件</p>
+<ol>
+<li><p>实例化方法</p>
+<ul>
+<li>构造方法：<code>&lt;bean class=&quot;&quot; id=&quot;&quot; /&gt;</code></li>
+<li>静态工厂方法：<code>&lt;bean class=&quot;&quot; factory-method=&quot;&quot; id=&quot;&quot;/&gt;</code></li>
+<li>通过工厂方法实例化bean：<code>&lt;bean class=&quot;&quot; factory-bean=&quot;&quot; factory-method=&quot;&quot; id=&quot;&quot;&gt;</code></li>
+<li>bean的别名：在bean标签中name属性设置多个值用,隔开；使用alias标签</li>
+</ul>
+</li>
+<li><p>注入bean</p>
+<ul>
+<li>通过构造方法<ul>
+<li>constructor-arg标签:属性:index\name\type\ref(引用其他bean)\value(字面量的值)</li>
+<li>使用c-命名空间</li>
+</ul>
+</li>
+<li>通过set方法<ul>
+<li>property标签：name\value\ref</li>
+<li>使用p-命名空间</li>
+</ul>
+</li>
+<li>null值注入: <null></null></li>
+<li>注入时创建内部Bean</li>
+<li>集合类Bean的类型注入：<ul>
+<li>list：使用<list>标签</list></li>
+<li>set：<set></set></li>
+<li>map:<map><entry key value></entry></map></li>
+<li>properties:<props></props></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="2">
+<li><p>通过注解</p>
+<ol>
+<li><p>开启包扫描：</p>
+<ul>
+<li>在configuration标记的类上添加@ComponentScan(“”)注解</li>
+<li>在xml中添加&lt;context:component-scan base-package=””/&gt;</li>
+</ul>
+</li>
+<li><p>在bean类的定义中添加注解</p>
+<ul>
+<li>@Component：通用型标注</li>
+<li>@Controller：被标注在Controller层</li>
+<li>@Repository：被标注在Dao层</li>
+<li>@Service：被标注在service层</li>
+</ul>
+</li>
+<li><p>注入Bean</p>
+<ol>
+<li><p>通过构造或者set方法注入Bean：添加@Autowired。若通过set方法注入，且没有无参构造方法或者只含需要注入的bean为参数的构造方法时，会报错。如以下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Bean1</span><span class="params">(String name, Bean bean)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.bean = bean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Bean1</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBean</span><span class="params">(Bean bean)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.bean = bean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过属性注入：直接添加@Autowired到属性中</p>
+</li>
+<li>集合类Bean注入<ul>
+<li>直接注入集合实例：添加一个方法返回该实例，使用@bean注解</li>
+<li>将多个泛型的实例注入到集合：例如有多个返回String类型的bean，会自动注入到String list里面</li>
+</ul>
+</li>
+<li>String、Integer等类型直接赋值：@value直接注入</li>
+<li>SpringIoC容器内置接口实例注入，例如context</li>
+</ol>
+</li>
+<li><p>常用注解：</p>
+<ul>
+<li>使用@Qualifier(“”)+@Autowired指定自动注入的beanID。</li>
+<li>使用@Order指定list顺序</li>
+<li>Scope：指定bean作用域</li>
+<li>@Lazy：开启懒加载</li>
+<li>@PostConstruct,@PreDestroy：设置初始和销毁方法</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="3">
+<li><p>Java Config配置:</p>
+<p>@Confirguration 相当于spring的配置文件XML</p>
+<p>@Bean(value=””) 用到方法上，表示当前方法的返回值是一个bean,相当于xml中的<bean>，beanId默认是小写的方法名</bean></p>
+</li>
+</ol>
+<p><em>对比xml与注解配置</em></p>
+<p>在xml中：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--创建一个xml配置文件--&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.github.szulx0.class1.Bean1"</span> <span class="attr">id</span> = <span class="string">"bean1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"22"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//在代码中获取上下文</span><br><span class="line">ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");</span><br><span class="line">//获取bean</span><br><span class="line">Bean1 bean1 =(Bean1)context.getBean("bean1");</span><br></pre></td></tr></table></figure></p>
+<p>在Java Config中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个calss配置文件</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="comment">//将一个bean交由spring创建并管理</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bean1 <span class="title">bean1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Bean1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//获取上下文</span></span><br><span class="line">ApplicationContext context1 = <span class="keyword">new</span> AnnotationConfigApplicationContext(MyConfiguration.class);</span><br><span class="line"><span class="comment">//获取bean</span></span><br><span class="line">Bean1 bean = context1.getBean(<span class="string">"bean1"</span>,Bean1.class);</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><strong>可以通过多少种方式完成依赖注入？</strong></p>
+<p>通常，依赖注入可以通过三种方式完成，即：</p>
+<ul>
+<li>接口注入</li>
+<li>构造函数注入</li>
+<li>setter 注入</li>
+</ul>
+<p>目前，在 Spring Framework 中，仅使用<strong>构造函数</strong>和 <strong>setter</strong> 注入这两种方式。那么这两种方式各有什么优缺点呢？综述来说：</p>
+<table>
+<thead>
+<tr>
+<th>构造函数注入</th>
+<th>setter 注入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>没有部分注入</td>
+<td>有部分注入</td>
+</tr>
+<tr>
+<td>不会覆盖 setter 属性</td>
+<td>会覆盖 setter 属性</td>
+</tr>
+<tr>
+<td>任意修改都会创建一个新实例</td>
+<td>任意修改不会创建一个新实例</td>
+</tr>
+<tr>
+<td>适用于设置很多属性</td>
+<td>适用于设置少量属性</td>
+</tr>
+</tbody>
+</table>
+<p>实际场景下，setting 注入使用的更多。</p>
+<hr>
+<p><strong>Bean作用域</strong><br><em>scope：默认为Singleton</em></p>
+<ol>
+<li>Singleton：单例模式，只会创建一个bean，在spring生命周期只会有一个实例</li>
+<li>Prototype：每次向上下文请求都会new一个新的实例</li>
+<li>web环境作用域<ul>
+<li>request：每个请求创建一个bean实例</li>
+<li>session：每个会话创建一个session实例</li>
+<li>application</li>
+</ul>
+</li>
+<li>自定义作用域</li>
+</ol>
+<hr>
+<p><strong>bean懒加载</strong></p>
+<p>  Sping容器会在创建容器时提前初始化Singleton作用于的bean。但是如果Bean被标注了lazy-init=”true”，则该bean只有在其被需要的时候才会初始化。</p>
+<p>  为某个bean设置懒加载：<br>  <code>&lt;bean id=&quot;&quot; class=&quot;.Bean2&quot; lazy-init=&quot;true&quot;&gt;&lt;/bean&gt;</code></p>
+<p>  为所有bean设置：<br>  <code>&lt;beans default-lazy-init=&quot;true&quot;&gt;&lt;/beans&gt;</code></p>
+<p>  <em>适用场景</em>：某个bean在程序整个运行周期都可能不被使用，可以考虑将该bean设为懒加载。</p>
+<p>  <em>优点</em>：尽可能节省了资源</p>
+<p>  <em>缺点</em>：可能会导致某个操作响应时间变长</p>
+<hr>
+<p><strong>bean的初始和销毁</strong></p>
+<ol>
+<li><p>初始化：</p>
+<ul>
+<li>使用init-method</li>
+<li>让bean实现InitalizingBean接口</li>
+</ul>
+</li>
+<li><p>bean销毁：</p>
+<ul>
+<li>使用destory-method</li>
+<li>让bean实现DisposableBean接口</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bear 2
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.guiguiyo.cn/2019/07/27/Spring配置总结/" title="Spring配置总结">http://www.guiguiyo.cn/2019/07/27/Spring配置总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/08/Maven使用/" rel="next" title="Maven使用">
+                <i class="fa fa-chevron-left"></i> Maven使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Bear 2</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC-概念"><span class="nav-number">1.1.</span> <span class="nav-text">IoC 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建IoC容器"><span class="nav-number">1.2.</span> <span class="nav-text">创建IoC容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean"><span class="nav-number">1.3.</span> <span class="nav-text">Bean</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天亮后便会很美的</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
