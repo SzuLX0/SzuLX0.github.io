@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="MySQL,">
 
 
 
@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="Hexo常用命令及一点点坑">
-<meta name="keywords" content="Go, 摄影, 笔记, 日常">
+<meta name="description" content="MySQL日志系统redo log与binlog 在 MySQL 中，并不是每一次更新都会写入磁盘，因为如果这样做，就得涉及到从磁盘找到那条记录，然后更新，整个IO成本，查找成本相当高。  redo log（重做日志）InnoDB 存储引擎是以页为单位来管理存储空间的, 我们的增删改查操作本质上都是在访问页面, 如读取一条数据, 会把这个数据所在的页加载到内存中, 而不仅仅是这条数据本身, 这个页">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://www.guiguiyo.cn/2019/02/24/hello-world/index.html">
+<meta property="og:title" content="MySQL 日志系统">
+<meta property="og:url" content="http://www.guiguiyo.cn/2019/08/07/MySQL-日志系统/index.html">
 <meta property="og:site_name" content="bear 2">
-<meta property="og:description" content="Hexo常用命令及一点点坑">
+<meta property="og:description" content="MySQL日志系统redo log与binlog 在 MySQL 中，并不是每一次更新都会写入磁盘，因为如果这样做，就得涉及到从磁盘找到那条记录，然后更新，整个IO成本，查找成本相当高。  redo log（重做日志）InnoDB 存储引擎是以页为单位来管理存储空间的, 我们的增删改查操作本质上都是在访问页面, 如读取一条数据, 会把这个数据所在的页加载到内存中, 而不仅仅是这条数据本身, 这个页">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T09:29:34.930Z">
+<meta property="og:image" content="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rdot92eij30vq0nsdj5.jpg">
+<meta property="og:image" content="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rfp0cq1xj30u013zdr4.jpg">
+<meta property="og:updated_time" content="2019-08-07T15:23:47.219Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Hexo常用命令及一点点坑">
+<meta name="twitter:title" content="MySQL 日志系统">
+<meta name="twitter:description" content="MySQL日志系统redo log与binlog 在 MySQL 中，并不是每一次更新都会写入磁盘，因为如果这样做，就得涉及到从磁盘找到那条记录，然后更新，整个IO成本，查找成本相当高。  redo log（重做日志）InnoDB 存储引擎是以页为单位来管理存储空间的, 我们的增删改查操作本质上都是在访问页面, 如读取一条数据, 会把这个数据所在的页加载到内存中, 而不仅仅是这条数据本身, 这个页">
+<meta name="twitter:image" content="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rdot92eij30vq0nsdj5.jpg">
 
 
 
@@ -120,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://www.guiguiyo.cn/2019/02/24/hello-world/">
+  <link rel="canonical" href="http://www.guiguiyo.cn/2019/08/07/MySQL-日志系统/">
 
 
 
 
 
-  <title>Hello World | bear 2</title>
+  <title>MySQL 日志系统 | bear 2</title>
   
 
 
@@ -273,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/02/24/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://www.guiguiyo.cn/2019/08/07/MySQL-日志系统/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Bear 2">
@@ -290,7 +293,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Hello World</h2>
+          <h2 class="post-title" itemprop="name headline">MySQL 日志系统</h2>
         
 
         <div class="post-meta">
@@ -302,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-24T10:55:48+08:00">
-                2019-02-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-07T23:20:20+08:00">
+                2019-08-07
               </time>
             
 
@@ -318,12 +321,34 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-03-07T17:29:34+08:00">
-                2019-03-07
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-07T23:23:47+08:00">
+                2019-08-07
               </time>
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -346,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  102
+                  1.7k
                 </span>
               
 
@@ -362,16 +387,12 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
           
 
-          
-              <div class="post-description">
-                  Hexo常用命令及一点点坑
-              </div>
           
 
         </div>
@@ -387,26 +408,72 @@
       
 
       
-        <ol>
-<li>Front-matter</li>
-</ol>
-<ol>
-<li><p>文章的Front-matter，：后面必须加一个空格，不然会报错</p>
-</li>
-<li><p>常用参数:</p>
-<p>tags: Go<br>categories: Go<br>description: Go</p>
-</li>
-</ol>
+        <h1 id="MySQL日志系统redo-log与binlog"><a href="#MySQL日志系统redo-log与binlog" class="headerlink" title="MySQL日志系统redo log与binlog"></a>MySQL日志系统redo log与binlog</h1><blockquote>
+<p>在 MySQL 中，并不是每一次更新都会写入磁盘，因为如果这样做，就得涉及到从磁盘找到那条记录，然后更新，整个IO成本，查找成本相当高。</p>
+</blockquote>
+<h2 id="redo-log（重做日志）"><a href="#redo-log（重做日志）" class="headerlink" title="redo log（重做日志）"></a>redo log（重做日志）</h2><p>InnoDB 存储引擎是以页为单位来管理存储空间的, 我们的增删改查操作本质上都是在访问页面, 如读取一条数据, 会把这个数据所在的页加载到内存中, 而不仅仅是这条数据本身, 这个页的默认大小是 16KB.</p>
+<p>在事务中, 我们有一个特性:持久性, 指对于一个已提交的事务, 在事务提交后, 即使系统崩溃, 也要保证这个事务对数据库做的更改不会丢失, 那么我们如何保证这一点呢, 有一个简单粗暴的做法就是: 在事务提交之前, 将事务所修改的所有页面都刷新到磁盘, 但这种做法有几个问题:</p>
+<ul>
+<li>刷新一个数据页太浪费了, 可能我们只修改了这个数据页中的一个字节, 但 InnoDB 所有操作都是基于页面的, 我们只修改一个字节就要刷新一个 16KB 的页到磁盘上台浪费了.</li>
+<li>随机 IO 刷起来比较慢, 一个事务可能包含了很多语句, 即使一条语句, 也可能修改了许多页面, 有可能修改的这些页面并不相邻, 那么这就需要进行很多次随机 IO, 这相对顺序 IO 来说很慢, 尤其对机械硬盘来说.</li>
+</ul>
+<p>为了解决这个问题，MySQL 设计者使用了一种叫做 WAL （Write-Ahead-Logging）的技术，它的关键点技术先写日志，再写磁盘。具体来说，当有一条记录需要更新的时候， InnoDB 引擎会把记录写到 redo log 里，并且更新内存，这个时候就算更新完成了。同时，InnoDB 引擎会在适当的时候，将这个记录更新到磁盘，而这个更新操作往往是在系统比较空闲的时候。</p>
 <hr>
-<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p><strong>那么问题来了，日志同样需要写入磁盘中，这样效率就会高吗？</strong></p>
+<blockquote>
+<p>首先每次写入 redo log 的数据是非常小的, 他只记录了这次修改的物理操作. 相较于之前要刷新 1 个或多个 16KB 的页面来说操作的数据量小多了, 而且写 redo log 是顺序 IO, 这整体会快很多.</p>
+</blockquote>
+<hr>
+<p>InnoDB 的 redo log 是固定大小的，由变量 innodb_log_file_size 和 innodb_log_files_in_group 设置，默认是2个48GBd的文件，它被设定为从头开始写，写到末尾由从头循环写，如下图所示：<br><img src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rdot92eij30vq0nsdj5.jpg" alt="image"></p>
+<p>write pos 记录当前的位置，一边写一遍后移，写到第3号我呢就爱你末尾后就回到第0号文件开头，checkpoint 是当前要查出的位置，也是往后推移并且循环的，擦除记录前要把记录更新到磁盘。write pos 和 checkpoint 之间的绿色位置表示可以用来记录新的操作。如果 write pos 追上 checkpoint，这个时候不再执行更新操作，需要停下来擦掉一部分记录，腾出空间。</p>
+<p><strong>有了 redo-log，InnoDB 就可以做到即使数据库异常重启，之前提交的记录也不会丢失，这个能力称之为 crash-safe。</strong></p>
+<p><strong>相关配置：</strong></p>
+<ul>
+<li><p>innodb_flush_log_at_trx_commit 参数设置为 1, 表示每次事务的 redo log 都直接持久化到磁盘, 推荐设置为 1, 这样可以保证 MySQL 异常重启后数据不会丢失.</p>
+</li>
+<li><p>sync_binlog 参数设置为 1, 表示每次事务的 binlog 都持久化到磁盘, 推荐设置为 1, 这样可以保证 MySQL 异常重启后 binlog 不会丢失.</p>
+</li>
+</ul>
+<h2 id="binlog（归档日志）"><a href="#binlog（归档日志）" class="headerlink" title="binlog（归档日志）"></a>binlog（归档日志）</h2><p>  redo log是InnoDB独有的日志系统，server层独有的日志系统称为binlog。<strong>binlog只用于归档，没有crash-safe的能力。</strong></p>
+<p>  <strong>两种日志的区别</strong></p>
+<pre><code>redo log | binlog
+---|---
+InnoDB独有 | server层实现，所有引擎都可用
+物理日志，记录数据页发生的变化，如在某个数据页发生了什么更改 | 逻辑日志，记录了这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。
+循环写，空间固定会用完 | 追加写，文件写到一定大小会切换到下一个，不会覆盖历史数据
+主要用于崩溃恢复 | 用于归档，恢复备份
+</code></pre><h2 id="崩溃恢复"><a href="#崩溃恢复" class="headerlink" title="崩溃恢复"></a>崩溃恢复</h2><p><strong>1. 判断规则:</strong></p>
+<ul>
+<li>若redo log是完整的，即有了<strong>commit</strong>标识，则直接提交</li>
+<li>若redo log只有<strong>prepared</strong>，则<strong>判断binlog是否存在且完整</strong><ul>
+<li>如果是，提交事务</li>
+<li>否则，回滚事务</li>
+</ul>
+</li>
+</ul>
+<p><strong>问题一：如何将redo log和binlog关联起来？</strong></p>
+<p>答：它们有一个共同的数据字段，叫 XID。崩溃恢复的时候，会按顺会按顺序扫描 redo log：</p>
+<ul>
+<li>如果碰到既有 prepare、又有 commit 的 redo log则直接提交事务</li>
+<li>如果碰到只有 parepare、而没有 commit 的 redo log，就拿着 XID 去 binlog 找对应的事务</li>
+</ul>
+<p><strong>2. 可以只用binlog实现崩溃恢复吗？</strong><br>  不行。若某个时刻执行了事务a并提交，在执行事务b的时候发生异常，且假设此时脏页还没有更新到内存中，若只有binlog，因为binlog不会记录数据，只会记录语句逻辑，它会认为事务a已经完成，不会回滚，只会回滚事务b，则会导致数据发生错误。</p>
+<p><strong>3. 那可以用redo log替代binlog吗？</strong><br>  只从崩溃恢复的角度上可以，但是目前binlog也有一些redo log无法替代的功能。如：</p>
+<ul>
+<li>归档</li>
+<li>MySQL依赖binlog，MySQL高可用的基础就是binlog</li>
+</ul>
+<h2 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h2><p>目的：保证两个日志系统的一致性</p>
+<p>一个update的更新过程：<code>mysql&gt; update T set c=c+1 where ID=2;</code></p>
+<ul>
+<li>执行器先找引擎取 ID=2 这一行。ID 是主键，引擎直接用树搜索找到这一行。如果 ID=2 这一行所在的数据页本来就在内存中，就直接返回给执行器；否则，需要先从磁盘读入内存，然后再返回。</li>
+<li>执行器拿到引擎给的行数据，把这个值加上 1，比如原来是 N，现在就是 N+1，得到新的一行数据，再调用引擎接口写入这行新数据。</li>
+<li>引擎将这行新数据更新到内存中，同时将这个更新操作记录到 redo log 里面，此时 redo log 处于 prepare 状态。然后告知执行器执行完成了，随时可以提交事务。</li>
+<li>执行器生成这个操作的 binlog，并把 binlog 写入磁盘。</li>
+<li>执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交（commit）状态，更新完成。</li>
+</ul>
+<p><img src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rfp0cq1xj30u013zdr4.jpg" alt="image"></p>
+<p>图片来自： <a href="https://time.geekbang.org/column/article/68963" target="_blank" rel="noopener">https://time.geekbang.org/column/article/68963</a></p>
 
       
     </div>
@@ -427,7 +494,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.guiguiyo.cn/2019/02/24/hello-world/" title="Hello World">http://www.guiguiyo.cn/2019/02/24/hello-world/</a>
+    <a href="http://www.guiguiyo.cn/2019/08/07/MySQL-日志系统/" title="MySQL 日志系统">http://www.guiguiyo.cn/2019/08/07/MySQL-日志系统/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -440,6 +507,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
 
       
       
@@ -449,15 +522,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/28/桶排序的应用-Maximum-Gap/" rel="next" title="桶排序的应用--Maximum Gap">
+                <i class="fa fa-chevron-left"></i> 桶排序的应用--Maximum Gap
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/24/Java异常/" rel="prev" title="Java异常">
-                Java异常 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -589,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL日志系统redo-log与binlog"><span class="nav-number">1.</span> <span class="nav-text">MySQL日志系统redo log与binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redo-log（重做日志）"><span class="nav-number">1.1.</span> <span class="nav-text">redo log（重做日志）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binlog（归档日志）"><span class="nav-number">1.2.</span> <span class="nav-text">binlog（归档日志）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#崩溃恢复"><span class="nav-number">1.3.</span> <span class="nav-text">崩溃恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两阶段提交"><span class="nav-number">1.4.</span> <span class="nav-text">两阶段提交</span></a></li></ol></li></ol></div>
             
 
           </div>
