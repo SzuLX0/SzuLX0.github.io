@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rdot92eij30vq0nsdj5.jpg">
 <meta property="og:image" content="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g5rfp0cq1xj30u013zdr4.jpg">
-<meta property="og:updated_time" content="2019-08-07T15:23:47.219Z">
+<meta property="og:updated_time" content="2019-08-07T15:26:43.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 日志系统">
 <meta name="twitter:description" content="MySQL日志系统redo log与binlog 在 MySQL 中，并不是每一次更新都会写入磁盘，因为如果这样做，就得涉及到从磁盘找到那条记录，然后更新，整个IO成本，查找成本相当高。  redo log（重做日志）InnoDB 存储引擎是以页为单位来管理存储空间的, 我们的增删改查操作本质上都是在访问页面, 如读取一条数据, 会把这个数据所在的页加载到内存中, 而不仅仅是这条数据本身, 这个页">
@@ -321,7 +321,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-07T23:23:47+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-07T23:26:43+08:00">
                 2019-08-07
               </time>
             
@@ -457,7 +457,7 @@ InnoDB独有 | server层实现，所有引擎都可用
 <li>如果碰到既有 prepare、又有 commit 的 redo log则直接提交事务</li>
 <li>如果碰到只有 parepare、而没有 commit 的 redo log，就拿着 XID 去 binlog 找对应的事务</li>
 </ul>
-<p><strong>2. 可以只用binlog实现崩溃恢复吗？</strong><br>  不行。若某个时刻执行了事务a并提交，在执行事务b的时候发生异常，且假设此时脏页还没有更新到内存中，若只有binlog，因为binlog不会记录数据，只会记录语句逻辑，它会认为事务a已经完成，不会回滚，只会回滚事务b，则会导致数据发生错误。</p>
+<p><strong>2. 可以只用binlog实现崩溃恢复吗？</strong><br>  不行。若某个时刻执行了事务a并提交，在执行事务b的时候发生异常，且假设此时脏页还没有更新到磁盘中，若只有binlog，因为binlog不会记录数据，只会记录语句逻辑，它会认为事务a已经完成，不会回滚，只会回滚事务b，则会导致数据发生错误。</p>
 <p><strong>3. 那可以用redo log替代binlog吗？</strong><br>  只从崩溃恢复的角度上可以，但是目前binlog也有一些redo log无法替代的功能。如：</p>
 <ul>
 <li>归档</li>
